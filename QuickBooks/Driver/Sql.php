@@ -676,7 +676,7 @@ abstract class QuickBooks_Driver_Sql extends QuickBooks_Driver
 				status = '" . QUICKBOOKS_USER_ENABLED . "',
 				touch_datetime = '" . date('Y-m-d H:i:s') . "'
 			WHERE
-				qb_username = '" . $this->_escape($username) . "' ", $errnum, $errmsg);
+				qb_username = '" . $this->_escape($username) . "' ");
 	}
 
 	/**
@@ -697,7 +697,7 @@ abstract class QuickBooks_Driver_Sql extends QuickBooks_Driver
 				status = '" . QUICKBOOKS_USER_DISABLED . "',
 				touch_datetime = '" . date('Y-m-d H:i:s') . "'
 			WHERE
-				qb_username = '" . $this->_escape($username) . "' ", $errnum, $errmsg);
+				qb_username = '" . $this->_escape($username) . "' ");
 	}
 
 	/**
@@ -2411,7 +2411,7 @@ abstract class QuickBooks_Driver_Sql extends QuickBooks_Driver
 		return false;
 	}
 
-	protected function _oauthAccessDelete($app_tenant)
+	protected function _oauthAccessDelete($app_username, $app_tenant)
 	{
 		$errnum = 0;
 		$errmsg = '';
@@ -2419,9 +2419,10 @@ abstract class QuickBooks_Driver_Sql extends QuickBooks_Driver
 		// Exists... DELETE!
 		$this->query("
 			DELETE FROM
-				" . $this->_mapTableName(QUICKBOOKS_DRIVER_SQL_OAUTHV2TABLE) . "
+				" . $this->_mapTableName(QUICKBOOKS_DRIVER_SQL_OAUTHV1TABLE) . "
 			WHERE
-				app_tenant = '%s' ", $errnum, $errmsg, null, null, array( $app_tenant ));
+			app_username = '%s' AND
+			app_tenant = '%s' ", $errnum, $errmsg, null, null, array( $app_username, $app_tenant ));
 
 		return $this->affected() > 0;
 	}

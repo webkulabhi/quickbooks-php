@@ -60,6 +60,11 @@ class QuickBooks_WebConnector_Queue
 	 * @var string
 	 */
 	protected $_user;
+
+	/**
+	 * @var QuickBooks_Driver_Factory
+	 */
+	public $_driver;
 	
 	/**
 	 * Create a new QuickBooks queue instance
